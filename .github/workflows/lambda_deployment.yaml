@@ -1,4 +1,4 @@
-name : Deploy Lambda Function
+name: Deploy Lambda Function
 
 on: push
 
@@ -6,17 +6,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    steps: 
+    steps:
       - uses: actions/checkout@v2
       - name: Install zip tool
         uses: montudor/action-zip@v1
-      - name: Create Zip file for lambda function
-        run: zip -r code.zip
+      - name: Create Zip file for Lambda function
+        run: zip -r code.zip ./*
       - name: AWS CLI v2
         uses: imehedi/actions-awscli-v2@latest
-        with: 
+        with:
           args: "lambda update-function-code \
-            --function-name arn:aws:lambda:eu-north-1:890742573978:function:TestFunction \
+            --function-name arn:aws:<provide your function ARN Here> \
             --zip-file fileb://code.zip"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
